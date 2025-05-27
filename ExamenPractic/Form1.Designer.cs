@@ -137,7 +137,7 @@
             Controls.Add(dataGridViewChild);
             Controls.Add(dataGridViewParent);
             Name = "Form1";
-            Text = "Examen Practic";
+            Text = "Examen Practic SGBD";
 
             ((System.ComponentModel.ISupportInitialize)dataGridViewParent).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewChild).EndInit();
