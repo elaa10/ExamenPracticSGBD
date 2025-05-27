@@ -11,7 +11,7 @@ namespace ExamenPractic
         DataSet ds = new DataSet();
         BindingSource bsParent = new BindingSource();
         BindingSource bsChild = new BindingSource();
-        string connectionString = @"Server=DELFI\SQLEXPRESS;Database=Problema1;Integrated Security=true; TrustServerCertificate=true;";
+        string connectionString = @"Server=DELFI\SQLEXPRESS;Database=ExamenPractic;Integrated Security=true; TrustServerCertificate=true;";
 
         public Form1()
         {
@@ -31,23 +31,23 @@ namespace ExamenPractic
                 {
                     con.Open();
 
-                    daParent = new SqlDataAdapter("SELECT * FROM Cofetarii;", con);
-                    daChild = new SqlDataAdapter("SELECT * FROM Briose;", con);
+                    daParent = new SqlDataAdapter("SELECT * FROM Echipe;", con);
+                    daChild = new SqlDataAdapter("SELECT * FROM Premii;", con);
 
-                    daParent.Fill(ds, "Cofetarii");
-                    daChild.Fill(ds, "Briose");
+                    daParent.Fill(ds, "Echipe");
+                    daChild.Fill(ds, "Premii");
 
-                    DataColumn pkColumn = ds.Tables["Cofetarii"].Columns["cod_cofetarie"];
-                    DataColumn fkColumn = ds.Tables["Briose"].Columns["cod_cofetarie"];
+                    DataColumn pkColumn = ds.Tables["Echipe"].Columns["cod_echipa"];
+                    DataColumn fkColumn = ds.Tables["Premii"].Columns["cod_echipa"];
 
-                    DataRelation relation = new DataRelation("FK_Cofetarii_Briose", pkColumn, fkColumn);
+                    DataRelation relation = new DataRelation("FK_Echipe_Premii", pkColumn, fkColumn);
                     ds.Relations.Add(relation);
 
-                    bsParent.DataSource = ds.Tables["Cofetarii"];
+                    bsParent.DataSource = ds.Tables["Echipe"];
                     dataGridViewParent.DataSource = bsParent;
 
                     bsChild.DataSource = bsParent;
-                    bsChild.DataMember = "FK_Cofetarii_Briose";
+                    bsChild.DataMember = "FK_Echipe_Premii";
                     dataGridViewChild.DataSource = bsChild;
                 }
             }
@@ -66,11 +66,11 @@ namespace ExamenPractic
                     daParent.SelectCommand.Connection = con;
                     daChild.SelectCommand.Connection = con;
 
-                    if (ds.Tables.Contains("Briose")) ds.Tables["Briose"].Clear();
-                    if (ds.Tables.Contains("Cofetarii")) ds.Tables["Cofetarii"].Clear();
+                    if (ds.Tables.Contains("Premii")) ds.Tables["Premii"].Clear();
+                    if (ds.Tables.Contains("Echipe")) ds.Tables["Echipe"].Clear();
 
-                    daParent.Fill(ds, "Cofetarii");
-                    daChild.Fill(ds, "Briose");
+                    daParent.Fill(ds, "Echipe");
+                    daChild.Fill(ds, "Premii");
                 }
             }
             catch (Exception ex)
@@ -83,35 +83,35 @@ namespace ExamenPractic
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtNumeBriosa.Text))
+                if (string.IsNullOrWhiteSpace(txtNumePremiu.Text))
                 {
-                    MessageBox.Show("Numele brioșei nu poate fi gol.");
+                    MessageBox.Show("Numele premiului nu poate fi gol.");
                     return;
                 }
 
-                if (numPret.Value <= 0)
+                if (numSuma.Value < 0)
                 {
-                    MessageBox.Show("Prețul trebuie să fie mai mare decât 0.");
+                    MessageBox.Show("Suma trebuie să fie mai mare decât 0.");
                     return;
                 }
 
                 DataRow selectedRow = ((DataRowView)bsParent.Current).Row;
-                int codCofetarie = Convert.ToInt32(selectedRow["cod_cofetarie"]);
+                int codEchipa = Convert.ToInt32(selectedRow["cod_echipa"]);
 
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
                     SqlCommand cmd = new SqlCommand(
-                        "INSERT INTO Briose (cod_cofetarie, nume_briosa, descriere, pret) " +
-                        "VALUES (@cod_cofetarie, @nume_briosa, @descriere, @pret)", con);
+                        "INSERT INTO Premii (cod_echipa, nume, an_decernare, suma) " +
+                        "VALUES (@cod_echipa, @nume, @an_decernare, @suma)", con);
 
-                    cmd.Parameters.AddWithValue("@cod_cofetarie", codCofetarie);
-                    cmd.Parameters.AddWithValue("@nume_briosa", txtNumeBriosa.Text);
-                    cmd.Parameters.AddWithValue("@descriere", txtDescriere.Text);
-                    cmd.Parameters.AddWithValue("@pret", Convert.ToDouble(numPret.Value));
+                    cmd.Parameters.AddWithValue("@cod_echipa", codEchipa);
+                    cmd.Parameters.AddWithValue("@nume", txtNumePremiu.Text);
+                    cmd.Parameters.AddWithValue("@an_decernare", txtAn.Text);
+                    cmd.Parameters.AddWithValue("@suma", Convert.ToDouble(numSuma.Value));
 
                     cmd.ExecuteNonQuery();
-                    MessageBox.Show("Brioșa a fost adăugată cu succes!");
+                    MessageBox.Show("Premiul a fost adăugat cu succes!");
                     btnRefresh_Click(sender, e);
                 }
             }
@@ -128,34 +128,34 @@ namespace ExamenPractic
                 if (bsChild.Current != null)
                 {
                     DataRow selectedRow = ((DataRowView)bsChild.Current).Row;
-                    if (selectedRow["cod_briosa"] == DBNull.Value)
+                    if (selectedRow["cod_premiu"] == DBNull.Value)
                     {
                         MessageBox.Show("ID invalid.");
                         return;
                     }
 
-                    int codBriosa = Convert.ToInt32(selectedRow["cod_briosa"]);
+                    int codPremiu = Convert.ToInt32(selectedRow["cod_premiu"]);
 
                     using (SqlConnection con = new SqlConnection(connectionString))
                     {
                         con.Open();
 
-                        SqlCommand cmd = new SqlCommand("DELETE FROM Briose WHERE cod_briosa = @cod_briosa", con);
-                        cmd.Parameters.AddWithValue("@cod_briosa", codBriosa);
+                        SqlCommand cmd = new SqlCommand("DELETE FROM Premii WHERE cod_premiu = @cod_premiu", con);
+                        cmd.Parameters.AddWithValue("@cod_premiu", codPremiu);
                         cmd.ExecuteNonQuery();
 
                         btnRefresh_Click(sender, e);
-                        MessageBox.Show("Brioșa a fost ștearsă cu succes!");
+                        MessageBox.Show("Premiul a fost ștears cu succes!");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Nu ați selectat nicio brioșă pentru ștergere.");
+                    MessageBox.Show("Nu ați selectat niciun premiu pentru ștergere.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Eroare la ștergerea brioșei: " + ex.Message);
+                MessageBox.Show("Eroare la ștergerea premiului: " + ex.Message);
             }
         }
 
@@ -170,26 +170,26 @@ namespace ExamenPractic
                         con.Open();
                         DataRow selectedRow = ((DataRowView)bsChild.Current).Row;
 
-                        if (selectedRow["cod_briosa"] == DBNull.Value)
+                        if (selectedRow["cod_premiu"] == DBNull.Value)
                         {
                             MessageBox.Show("ID invalid.");
                             return;
                         }
 
                         daChild.UpdateCommand = new SqlCommand(
-                            "UPDATE Briose SET cod_cofetarie = @cod_cofetarie, nume_briosa = @nume_briosa, descriere = @descriere, pret = @pret " +
-                            "WHERE cod_briosa = @cod_briosa", con);
+                            "UPDATE Premii SET cod_echipa = @cod_echipa, nume = @nume, an_decernare = @an_decernare, suma = @suma " +
+                            "WHERE cod_premiu = @cod_premiu", con);
 
-                        daChild.UpdateCommand.Parameters.AddWithValue("@cod_cofetarie", Convert.ToInt32(selectedRow["cod_cofetarie"]));
-                        daChild.UpdateCommand.Parameters.AddWithValue("@cod_briosa", Convert.ToInt32(selectedRow["cod_briosa"]));
-                        daChild.UpdateCommand.Parameters.AddWithValue("@nume_briosa", selectedRow["nume_briosa"].ToString());
-                        daChild.UpdateCommand.Parameters.AddWithValue("@descriere", selectedRow["descriere"].ToString());
-                        daChild.UpdateCommand.Parameters.AddWithValue("@pret", Convert.ToDouble(selectedRow["pret"]));
+                        daChild.UpdateCommand.Parameters.AddWithValue("@cod_echipa", Convert.ToInt32(selectedRow["cod_echipa"]));
+                        daChild.UpdateCommand.Parameters.AddWithValue("@cod_premiu", Convert.ToInt32(selectedRow["cod_premiu"]));
+                        daChild.UpdateCommand.Parameters.AddWithValue("@nume", selectedRow["nume"].ToString());
+                        daChild.UpdateCommand.Parameters.AddWithValue("@an_decernare", Convert.ToInt32(selectedRow["an_decernare"]));
+                        daChild.UpdateCommand.Parameters.AddWithValue("@suma", Convert.ToDouble(selectedRow["suma"]));
 
                         int rowsAffected = daChild.UpdateCommand.ExecuteNonQuery();
                         if (rowsAffected >= 1)
                         {
-                            MessageBox.Show("Brioșa a fost actualizată cu succes!");
+                            MessageBox.Show("Premiul a fost actualizat cu succes!");
                         }
 
                         btnRefresh_Click(sender, e);
@@ -197,12 +197,12 @@ namespace ExamenPractic
                 }
                 else
                 {
-                    MessageBox.Show("Nu ați selectat nicio brioșă pentru actualizare.");
+                    MessageBox.Show("Nu ați selectat niciun premiu pentru actualizare.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Eroare la actualizarea brioșei: " + ex.Message);
+                MessageBox.Show("Eroare la actualizarea premiului: " + ex.Message);
             }
         }
     }

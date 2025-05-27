@@ -61,3 +61,4 @@ C:\Users\Alexandra\Desktop\Facultate anul 2\Semestrul 2\SGBD\Laborator\ExamenPra
 C:\Users\Alexandra\Desktop\Facultate anul 2\Semestrul 2\SGBD\Laborator\ExamenPractic\ExamenPractic\ExamenPractic\obj\Debug\net9.0-windows\ExamenPractic.pdb
 C:\Users\Alexandra\Desktop\Facultate anul 2\Semestrul 2\SGBD\Laborator\ExamenPractic\ExamenPractic\ExamenPractic\obj\Debug\net9.0-windows\ExamenPractic.genruntimeconfig.cache
 C:\Users\Alexandra\Desktop\Facultate anul 2\Semestrul 2\SGBD\Laborator\ExamenPractic\ExamenPractic\ExamenPractic\obj\Debug\net9.0-windows\ref\ExamenPractic.dll
+C:\Users\Alexandra\Desktop\Facultate anul 2\Semestrul 2\SGBD\Laborator\ExamenPractic\ExamenPractic\ExamenPractic\obj\Debug\net9.0-windows\ExamenPractic.sourcelink.json

@@ -19,9 +19,9 @@
         {
             dataGridViewParent = new DataGridView();
             dataGridViewChild = new DataGridView();
-            txtNumeBriosa = new TextBox();
-            txtDescriere = new TextBox();
-            numPret = new NumericUpDown();
+            txtNumePremiu = new TextBox();
+            txtAn = new TextBox();
+            numSuma = new NumericUpDown();
             btnAddChild = new Button();
             btnDeleteChild = new Button();
             btnUpdateChild = new Button();
@@ -29,7 +29,7 @@
 
             ((System.ComponentModel.ISupportInitialize)dataGridViewParent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewChild).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numPret).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numSuma).BeginInit();
             SuspendLayout();
 
             // 
@@ -53,32 +53,32 @@
             dataGridViewChild.TabIndex = 1;
 
             // 
-            // txtNumeBriosa
+            // txtNumePremiu
             // 
-            txtNumeBriosa.Location = new Point(63, 321);
-            txtNumeBriosa.Name = "txtNumeBriosa";
-            txtNumeBriosa.Size = new Size(125, 27);
-            txtNumeBriosa.TabIndex = 2;
-            txtNumeBriosa.PlaceholderText = "Nume Brioșă";
+            txtNumePremiu.Location = new Point(63, 321);
+            txtNumePremiu.Name = "txtNumePremiu";
+            txtNumePremiu.Size = new Size(125, 27);
+            txtNumePremiu.TabIndex = 2;
+            txtNumePremiu.PlaceholderText = "Nume Premiu";
 
             // 
-            // txtDescriere
+            // txtAn
             // 
-            txtDescriere.Location = new Point(63, 366);
-            txtDescriere.Name = "txtDescriere";
-            txtDescriere.Size = new Size(125, 27);
-            txtDescriere.TabIndex = 3;
-            txtDescriere.PlaceholderText = "Descriere";
+            txtAn.Location = new Point(63, 366);
+            txtAn.Name = "txtAn";
+            txtAn.Size = new Size(125, 27);
+            txtAn.TabIndex = 3;
+            txtAn.PlaceholderText = "An decernare";
 
             // 
-            // numPret
+            // numSuma
             // 
-            numPret.DecimalPlaces = 2;
-            numPret.Location = new Point(466, 321);
-            numPret.Maximum = 1000;
-            numPret.Name = "numPret";
-            numPret.Size = new Size(150, 27);
-            numPret.TabIndex = 4;
+            numSuma.DecimalPlaces = 2;
+            numSuma.Location = new Point(466, 321);
+            numSuma.Maximum = 1000;
+            numSuma.Name = "numSuma";
+            numSuma.Size = new Size(150, 27);
+            numSuma.TabIndex = 4;
 
             // 
             // btnAddChild
@@ -131,9 +131,9 @@
             Controls.Add(btnUpdateChild);
             Controls.Add(btnDeleteChild);
             Controls.Add(btnAddChild);
-            Controls.Add(numPret);
-            Controls.Add(txtDescriere);
-            Controls.Add(txtNumeBriosa);
+            Controls.Add(numSuma);
+            Controls.Add(txtAn);
+            Controls.Add(txtNumePremiu);
             Controls.Add(dataGridViewChild);
             Controls.Add(dataGridViewParent);
             Name = "Form1";
@@ -141,7 +141,7 @@
 
             ((System.ComponentModel.ISupportInitialize)dataGridViewParent).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewChild).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numPret).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numSuma).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -150,9 +150,9 @@
 
         private DataGridView dataGridViewParent;
         private DataGridView dataGridViewChild;
-        private TextBox txtNumeBriosa;
-        private TextBox txtDescriere;
-        private NumericUpDown numPret;
+        private TextBox txtNumePremiu;
+        private TextBox txtAn;
+        private NumericUpDown numSuma;
         private Button btnAddChild;
         private Button btnDeleteChild;
         private Button btnUpdateChild;
